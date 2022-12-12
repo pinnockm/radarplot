@@ -169,10 +169,9 @@ class Graph(_Basis):
 
     pass
 
-
 class RadarPlot:
 
-    def __init__(self, dim:int, labels:List[str], g:Graph) -> None:
+    def __init__(self, dim:int, labels:List[str], g:Graph, name:str=None) -> None:
         
         self.dim = dim
         # PRECONDITION: length(self.labels) == dim
@@ -186,7 +185,7 @@ class RadarPlot:
         
         self.basis = _Basis(dim=dim).standard_basis
         self.graph = g
-        
+        self.name = name
         pass
     
     def __figure(self, spokes:bool, dpi:int):
@@ -219,6 +218,9 @@ class RadarPlot:
 
     def plot(self, interpolation:str='quadratic', spokes:bool=True, fill:bool=False, alpha:float=0.8, dpi:int=100):
 
+        if self.name:
+            plt.title(f"{self.name}")
+        
         self.__figure(spokes, dpi)
         self.graph._patch(method=interpolation, fill=fill, alpha=alpha)
         plt.show()
